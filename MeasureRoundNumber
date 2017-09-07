@@ -1,0 +1,33 @@
+/********************
+ 2017-9-5 Eddie
+ 用于测量指尖陀螺转动的圈数。
+*******************/
+
+int photocellPin = 2;
+int val = 0;
+int i = 0;
+int Light = 400;
+bool LastIsLight = 1, CurrentIsLight = 1;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  val = analogRead(photocellPin);
+  if (val <= Light ) {
+    CurrentIsLight = 0;
+    if (LastIsLight == 1 &&  CurrentIsLight == 0) {
+      i++;
+      Serial.println(i / 3 );
+      LastIsLight = 0;
+    }
+  }
+  else
+  {
+    CurrentIsLight = 1;
+    if (LastIsLight == 0) LastIsLight = 1;
+  }
+}
